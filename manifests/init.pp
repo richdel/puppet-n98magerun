@@ -18,7 +18,7 @@ class n98magerun(
     cwd         => $install_dir,
     require     => [
       Package['curl', $php_package],
-      Augeas['whitelist_phar', 'allow_url_fopen']
+      Augeas['allow_url_fopen']
     ]
   }
 
@@ -38,12 +38,6 @@ class n98magerun(
       ownder => root,
       group => root
     }
-  }
-
-  augeas { 'whitelist_phar':
-    context => '/files/etc/php5/conf.d/suhosin.ini/suhosin',
-    changes => 'set suhosin.executor.include.whitelist phar',
-    require => Package[$php_package]
   }
 
   augeas{ 'allow_url_fopen':
